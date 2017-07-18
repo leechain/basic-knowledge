@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>经典JS面试题</title>
+</head>
+
+<body>
+    <!-- 1、预解析 -->
+    <!-- 预解析：在当前作用域下，JS运行之前，会把带有var和function关键字的事先声明，但不会赋值（个人理解）。 -->
+    <!-- 考点有两个：第一变量声明提前，第二函数声明优先于变量声明 -->
+    <script type="text/javascript">
+        //第一题
+        // alert(a);
+        // a();
+        // var a = 3;
+
+        // function a() {//函数声明，优于变量声明
+        //     alert(10);
+        // }
+        // alert(a);
+        // a = 6;
+        // a();
+        // 分析过程：
+        // 1、函数声明优先于变量声明，所以刚开始，a就是function a() {alert(10);}，就会看到这个函数；
+        // 2、a();执行函数，就是出现 alert(10);
+        // 3、执行 var a = 3;所以alert(a);就是显示3；
+        // 4、最后一行的a()，由于a不是一个函数了，所以往下再执行到a()的时候，报错
+
+
+        // 第二题
+        // alert(a);
+        // a();
+        // var a = 3;
+        // var a = function a() { //函数表达式，和变量声明同等
+        //     alert(10);
+        // }
+        // alert(a);
+        // a = 6;
+        // a();
+        // 分析过程：
+        // 1、在之前说过，预解析是把带有var和function关键字的事先声明，但不会赋值，所以一开始的执行结果是undefined；
+        // 2、然后报错，是因为执行到a()的时候，a并不是一个函数。
+    </script>
+
+    <!-- 2、预解析和作用域 -->
+    <script type="text/javascript">
+        // var a = 0;
+
+        // function aa() {
+        //     alert(a);
+        //     a = 3;
+        // }
+        // 结果是什么都没有发生，因为要执行aa函数才会执行alert(0)。
+
+
+        // var a = 0;
+
+        // function aa() {
+        //     alert(a);
+        //     var a = 3;
+        // }
+        // aa(); //结果是undefined，在aa函数里面，有var a = 3;那么在aa作用域里面，就是把a这个变量声明提前，但是不会赋值，所以是undefined。
+
+
+        // var a = 0;
+
+        // function aa(a) {
+        //     alert(a);
+        //     a = 3;
+        // }
+        // aa(5);
+        // alert(a);//结果是弹出5，0
+        // 在函数体内，执行alert(a)和a = 3，修改的并不是全局变量a，而是参数a。
+
+
+        // var a = 0;
+
+        // function aa(a) {
+        //     alert(a);
+        //     var a = 3;
+        //     alert(a);
+        // }
+        // aa(5); //结果是弹出5，3
+        // 形参和局部变量优先级一样，此时相当于：
+        // function aa(a) {
+        //     var a;//先声明
+        //     a=5;//由于形参和变量名称一样，覆盖了！
+        //     alert(a);
+        //     a = 3;
+        //     alert(a);
+        // }
+
+
+        // var a = 0;
+
+        // function aa(a) {
+        //     alert(a);
+        //     a = 3;
+        //     alert(a);
+        // }
+        // aa();
+        // alert(a); //结果是弹出undefined，3，0
+        // 1、首先，参数优先级高于全局变量，由于没传参数，所以是undefined；
+        // 2、a=3，实际上修改的是形参a的值，并不是全局变量a，往下alert(a)也是形参a
+        // 3、最后的alert(a)是全局变量a的值。
+    </script>
+
+    <!-- 3、递归 -->
+    <!-- 3.1费波纳茨数组：任意相邻两个数字相加等于下一个数字，比如：1，2，3，5，8，13，21，34...... -->
+
+    <!-- 3.2数据排列：比如 123454321  23456765432 -->
+    <script type="text/javascript">
+        // 思路：先展示前面的，后展示后面的  n是开始的数字，m是结束的数字
+        // function num1(n, m) {
+        //     for (var i = n; i < m; i++) {
+        //         console.log(i);
+        //         if (i == m - 1) {
+        //             num2(n, m);
+        //         }
+        //     }
+        // }
+
+        // function num2(n, m) {
+        //     for (var i = m; i >= n; i--) {
+        //         console.log(i);
+        //     }
+        // }
+        // num1(2, 5);
+
+
+        // var arr = [];
+        // var str = '';
+
+        // function num1(n, m) {
+        //     for (var i = n; i < m; i++) {
+        //         arr.push(i);
+        //         if (i == m - 1) {
+        //             num2(n, m);
+        //         }
+        //     }
+        //     str = arr.join('');
+        //     return str;
+        // }
+
+        // function num2(n, m) {
+        //     for (var i = m; i >= n; i--) {
+        //         arr.push(i);
+        //     }
+        // }
+        // alert(num1(2, 5));
+
+
+        // 简化代码
+        // function num(n, m) {
+        //     console.log(n);
+        //     if (n < m) {
+        //         num(n + 1, m);
+        //         console.log(n);
+        //     }
+        // }
+        // num(2, 5);
+
+
+        // var arr = [];
+        // var str = '';
+
+        // function num(n, m) {
+        //     arr.push(n);
+        //     if (n < m) {
+        //         num(n + 1, m);
+        //         arr.push(n);
+        //     }
+        //     str = arr.join('');
+        //     return str;
+        // }
+        // alert(num(2, 5));
+
+
+        //另一种解法
+        // function num(n, m) {
+        //     var len = (m - n) * 2 + 1;
+        //     for (var i = 0; i < len; i++) {
+        //         n < m ? (console.log(n++)) : (console.log(m--));
+        //     }
+        // }
+        // num(2, 5);
+    </script>
+
+</body>
+
+</html>

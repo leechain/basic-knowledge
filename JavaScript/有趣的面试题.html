@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>有趣的面试题</title>
+</head>
+
+<body>
+
+    <script>
+        function test() {
+            for (var i = 0; i < 5; i++) {
+                console.log(i);
+            }
+        }
+        // test(); //0,1,2,3,4
+
+        function test() {
+            for (var i = 0; i < 5; i++) {
+                console.log(i);
+            }
+            console.log(i);
+        }
+        // test();//0,1,2,3,4
+
+        function test1() {
+            for (var i = 0; i < 5; i++) {
+                setTimeout(function() {
+                    console.log(i);
+                }, 1000 * i);
+            }
+        }
+        // test1(); // 开始输出一个5，然后每隔一秒再输出一个5，一共输出5个5，因为setTimeout会延迟执行，那么执行到console.log的时候，i已经变成5了
+
+        function test1() {
+            for (var i = 0; i < 5; i++) {
+                setTimeout(function() {
+                    console.log(i);
+                }, 1000);
+            }
+            console.log(i);
+        }
+        // test1(); //输出是5 55555
+        // 分析：在setTimeout执行之前，for循环已经执行完毕，此时i值为5，一开始是执行最后的console.log(i);
+        // 在for循环的时候一下子定义了5个setTimeout，大概1秒后，一下子输出55555
+
+        // 如果上面程序的结果想要输出0-4，怎么改呢？这里就用到闭包了
+        function test2() {
+            for (var i = 0; i < 5; i++) {
+                (function(i) {
+                    setTimeout(function() {
+                        console.log(i);
+                    }, 1000 * i);
+                })(i);
+            }
+        }
+        // test2(); //利用闭包使输出结果变成了0，1，2，3，4
+
+        function test2() {
+            for (var i = 0; i < 5; i++) {
+                (function(i) {
+                    setTimeout(function() {
+                        console.log(i);
+                    }, 1000);
+                })(i);
+            }
+            console.log(i);
+        }
+        // test2(); //输出是5  01234，因为这里采用了闭包
+
+        // 如果删掉function(i)中的i会发生什么？
+        function test3() {
+            for (var i = 0; i < 5; i++) {
+                (function() {
+                    setTimeout(function() {
+                        console.log(i);
+                    }, 1000 * i);
+                })(i);
+            }
+        }
+        // test3(); //删掉了这个i，内部其实没有对i保持引用，输出结果就会变成5。输出结果和test1一样，开始输出一个5，然后每隔一秒再输出一个5，一共输出5个5
+
+        // 如果改成下面这样，输出结果又是什么呢？
+        function test4() {
+            for (var i = 0; i < 5; i++) {
+                setTioumet((function(i) {
+                    console.log(i);
+                })(i), 1000 * i);
+            }
+        }
+        // test4(); //输出结果是0，1，2，3，4
+        // 这里的setTioumet可以接受函数或者字符串作为参数，那么这里的立即执行函数应该是个undefined，等价于：setTimeout(undefined,...);
+        //而立即执行函数会立即执行，那么应该是立马输出的，所以就立马输出0，1，2，3，4
+        function test5() {
+            var output = function(i) {
+                setTimeout(function() {
+                    console.log(i);
+                }, 1000);
+            };
+            for (var i = 0; i < 5; i++) {
+                output(i); //这里传过去的i值被复制了
+            }
+            console.log(i);
+        }
+        // test5(); //输出结果为5 01234，把i当参数传进output，记录每一次循环的i
+
+        function test6() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(function() {
+                    console.log(i);
+                }, 1000);
+            }
+            console.log(i);
+        }
+        // test6(); //结果是：报错 01234，因为这里i是用let定义的，不是var 
+
+        //对 Promise的了解
+        function testPromise() {
+            setTimeout(function() {
+                console.log(1);
+            }, 0);
+            new Promise(function executor(resolve) {
+                console.log(2);
+                for (var i = 0; i < 10000; i++) {
+                    i == 9999 && resolve();
+                }
+                console.log(3);
+            }).then(function() {
+                console.log(4);
+            });
+            console.log(5);
+        }
+        // testPromise(); //输出结果是2，3，5，4，1
+        //这道题考察的是JavaScript的运行输出结果是2，3，5，4，1机制，分析思路为：
+        // 1、首先碰到一个setTimeout，于是会先设置一个定时，在定时结束后将传递这个函数放到任务队列里面，因此开始肯定不会输出1；
+        // 2、然后是一个Promise，里面的函数是直接执行的，因此应当直接输出2 3；
+        // 3、然后，Promise的then应当会放到当前tick的最后，但是还是在当前tick中。因此，应当先输出5，然后再输出4；
+        // 4、最后再到下一个tick，就是1。
+        // 5、最后的
+    </script>
+</body>
+
+</html>
