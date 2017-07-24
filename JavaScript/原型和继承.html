@@ -1,0 +1,85 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>原型和继承</title>
+</head>
+
+<body>
+    <ul>
+        <p>什么是原型？什么是原型链？</p>
+        <li>原型：即每个function函数都有的一个prototype属性</li>
+        <li>原型链：每个对象和原型都有原型，对象的原型指向原型对象，而父的原型又指向父的父，这种原型层层连接起来的就构成了原型链。</li>
+        <p>__proto__，我喜欢把其称为原型指针。终归到头，prototype只不过是一个属性而已，它没有什么实际的意义，最后能做原型链继承的还是通过__proto__这个原型指针来完成的。<br> 我们看到的所谓的继承只不过是将需要继承的属性挂载到继承者的prototype属性上面去的，实际在找寻继承的属性的时候，会通过__proto__原型指针一层一层往上找，即会去找__proto__原型指针它的一个指向。</p>
+        <p>总结：原型即prototype，它只是所有function上的一个属性而已，真正的“大佬”是__proto__，“大佬”指向谁，谁才能有言语权（当然可能因为“大佬”过于霸道，所以在ECMA-262之后才被Standard化）。</p>
+        <hr>
+        <p>这里我们通过指向这个概念来理解一下继承。这里咱就谈两个万变不离其宗的继承方式，一个是构造函数继承，一个是原型链继承。</p>
+    </ul>
+</body>
+<script type="text/javascript">
+    //原型例子
+    // function Test() {
+    //     this.a = 'this is Test';
+    // }
+    // Test.prototype = {
+    //     b: function() {
+    //         console.log("this is Test's prototype");
+    //     }
+    // }
+
+    // function Test2() {
+    //     this.a = 'this is Test2'
+    // }
+    // Test2.prototype = new Test();
+    // var test = new Test2();
+
+    // test.b(); //this is Test's prototype
+    // console.log(test.prototype); //undefined
+    // console.log(test); //Test2{a: "this is Test2"}
+
+    //构造函数继承
+    // function Test() {
+    //     this.a = 'this is test';
+    //     console.log(this.a);
+    //     console.log(this);
+    // }
+
+    // function Test2() {
+    //     Test.apply(this)
+    // }
+    // var test = new Test2();
+    // this is test
+    // Test2 {a: 'this is test'}
+
+    // 原型链继承
+    // 一般情况，我们做原型链继承，会通过子类prototype属性等于（指向）父类的实例。即
+    // Child.prototype = new Parent();
+
+    // 通过原型prototype做monkey patch
+    // 我想在继承父类方法的同时，完成自己独立的一些操作
+    function Parent() {
+        this.a = 'this is Parent'
+    }
+    Parent.prototype = {
+        b: function() {
+            console.log(this.a);
+        }
+    }
+
+    function Child() {
+        this.a = 'this is Child'
+    }
+    Child.prototype = {
+        b: function() {
+            console.log('monkey patch');
+            Parent.prototype.b.call(this);
+        }
+    }
+    var test = new Child();
+    test.b();
+    // monkey patch
+    // this is Child
+</script>
+
+</html>
