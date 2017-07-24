@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Promise运行机制</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 当需要确保某代码在谁之后执行，可以利用以下几种方法：
+
+        //一、利用函数调用栈，将我们想要执行的代码放入回调函数中
+        // 一个简单的封装
+        // function want() {
+        //     console.log('这是你想要执行的代码');
+        // }
+
+        // function fn(want) {
+        //     console.log('这里表示执行了一大堆各种代码');
+
+        //     // 其他代码执行完毕，最后执行回调函数
+        //     want && want();
+        // }
+
+        // fn(want); //执行结果：这里表示执行了一大堆各种代码 这是你想要执行的代码
+
+
+        // 二、使用队列机制
+        // function want() {
+        //     console.log('这是你想要执行的代码');
+        // }
+
+        // function fn1(want) {
+        //     // 将想要执行的代码放入队列中，根据事件循环机制，我们不用非得将它放到最后面了，由你自由选择
+        //     want && setTimeout(want, 0);
+        //     console.log('这里表示执行了一大堆各种代码');
+        // }
+
+        // fn1(want); //执行结果：这里表示执行了一大堆各种代码 这是你想要执行的代码
+
+
+        // 三、利用Promise机制，如果浏览器已经支持了原生的Promise对象
+        // function want() {
+        //     console.log('这是你想要执行的代码');
+        // }
+
+        // function fn2(want) {
+        //     console.log('这里表示执行了一大堆各种代码');
+
+        //     // 返回Promise对象
+        //     return new Promise(function(resolve, reject) {
+        //         if (typeof want == 'function') {
+        //             resolve(want);
+        //         } else {
+        //             reject('TypeError:' + want + '不是一个函数')
+        //         }
+        //     })
+        // }
+        // fn2(want).then(function(want) {
+        //         want();
+        //     }) //执行结果：这里表示执行了一大堆各种代码  这是你想要执行的代码
+
+        // fn2('1234').catch(function(err) {
+        //         console.log(err);
+        //     }) //执行结果：这里表示执行了一大堆各种代码  TypeError:1234不是一个函数
+
+        //以上代码看上去更加复杂，可是代码变得更加健壮，处理了错误输入的情况。
+
+
+        //Promise对象中的then方法，可以接收构造函数中处理的状态变化，并分别对应执行。
+        //then方法有2个参数，第一个函数接收resolved状态的执行，第二个函数接收reject状态的执行。
+        // function fn3(num) {
+        //     return new Promise(function(resolve, reject) {
+        //         if (typeof num == 'number') {
+        //             resolve();
+        //         } else {
+        //             reject();
+        //         }
+        //     }).then(function() {
+        //         console.log('参数是一个number值');
+        //     }, function() {
+        //         console.log('参数不是一个number值');
+        //     })
+        // }
+        // fn3('hahaha'); //参数不是一个number值
+        // fn3(1234); //参数是一个number值
+
+        //then方法的执行结果也会返回一个Promise对象。因此我们可以进行then的链式执行，这也是解决回调地狱的主要方式。
+        // function fn4(num) {
+        //     return new Promise(function(resolve, reject) {
+        //         if (typeof num == 'number') {
+        //             resolve();
+        //         } else {
+        //             reject();
+        //         }
+        //     }).then(function() {
+        //         console.log('参数是一个number值');
+        //     }).then(null, function() {
+        //         console.log('参数不是一个number值');
+        //     })
+        // }
+        // fn4('hahaha'); //参数不是一个number值
+        // fn4(1234); //参数是一个number值
+
+        //then(null,function(){})就等同于catch(function(){})
+        // function fn5(num) {
+        //     return new Promise(function(resolve, reject) {
+        //         if (typeof num == 'number') {
+        //             resolve();
+        //         } else {
+        //             reject();
+        //         }
+        //     }).then(function() {
+        //         console.log('参数是一个number值');
+        //     }).catch(function() {
+        //         console.log('参数不是一个number值');
+        //     })
+        // }
+        // fn5('hahaha'); //参数不是一个number值
+        // fn5(1234); //参数是一个number值
+
+        // 下面举个例子
+        var fn = function(num) {
+            return new Promise(function(resolve, reject) {
+                if (typeof num == 'number') {
+                    resolve(num);
+                } else {
+                    reject('TypeError');
+                }
+            })
+        }
+        fn(2).then(function(num) {
+                console.log('first:' + num);
+                return num + 1;
+            })
+            .then(function(num) {
+                console.log('second:' + num);
+                return num + 1;
+            }).then(function(num) {
+                console.log('third:' + num);
+                return num + 1;
+            })
+            // 输出结果：first:2 second:3 third:4
+    </script>
+</body>
+
+</html>
