@@ -1,0 +1,99 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+
+<body>
+    <ul>
+        <p>this是什么？它本身就是一种指向。this的指向可以分为以下几种情况：</p>
+        <li>普通调用，this指向为调用者</li>
+        <li>call/apply调用，this指向为当前thisArg参数</li>
+        <li>箭头函数，this指向为当前函数的this指向</li>
+    </ul>
+    <hr/>
+    <ul>
+        <p>call方法形式：fun.call(thisArg[,arg1[,arg2[,...]]])</p>
+        <li>thisArg，当前this指向</li>
+        <li>arg1[,arg2[,...]]，指定的参数列表</li>
+    </ul>
+    <hr/>
+    <ul>
+        <p>apply调用：和call类似，唯一的一个明显区别就是call参数为多个，apply参数为两个，第二个参数为数组或类数组形式。</p>
+        <p>apply方法形式：fun.call(thisArg,[argsArray])</p>
+        <li>thisArg，当前this指向</li>
+        <li>一个数组或者类数组对象，其中的数组元素将作为单独的参数传给fun函数</li>
+    </ul>
+    <hr/>
+    <p>另外，提到call/apply，就要说到bind了，bind里面的this指向，会永远指向bind的当前thisArg，即context上下文环境参数不可重写。<br/> 这也是为什么a.bind(b).call(c),最终的this指向会是b的原因。至于为什么，其实就是bind实现实际上是通过闭包，并且配合call/apply进行实现的。
+    </p>
+    <hr/>
+    <p>箭头函数：箭头函数是没有绑定本身的this的，它的this指向为当前函数的this指向。</p>
+    <script type="text/javascript">
+        // 一、普通调用
+        // 1、对象方法的调用
+        // var obj = {
+        //     a: 'this is obj',
+        //     test: function() {
+        //         console.log(this.a);
+        //     }
+        // }
+        // obj.test(); //this is obj
+
+        //2、 “单纯”函数调用
+        // var a = 'this is window';
+
+        // function test() {
+        //     console.log(this.a);
+        // }
+        // test(); //this is window
+
+        //因为window对象是全局对象，所以上面代码块就等同于
+        // window.a = 'this is window';
+
+        // window.test = function test() {
+        //     console.log(this.a);
+        //     //此时的window为调用者，即this会指向window
+        // }
+        // window.test(); //this is window
+
+        // //3、构造函数调用
+        // function test() {
+        //     this.a = 'this is test';
+        //     console.log(this.a);
+        //     console.log(this);
+        // }
+        // test(); //this is test  Window{}
+
+        //此时的this的确指向了该构造函数的实例对象
+        // function Test() {
+        //     this.a = 'this is test';
+        //     console.log(this.a);
+        //     console.log(this);
+        // }
+        // var test = new Test(); //this is test  Test{a: "this is test"}
+        //此时的this指向了该构造函数的实例对象
+
+
+        //二、call/apply调用
+        //1、call调用
+        // function Test() {
+        //     this.a = 'this is test';
+        //     console.log(this.a);
+        //     console.log(this);
+        // }
+
+        // function Test2() {
+        //     Test.apply(this);
+        // }
+        // var test = new Test2(); //this is test  Test2{a:"this is test"}
+
+        //2、apply调用
+
+        //3、箭头函数
+    </script>
+</body>
+
+</html>
