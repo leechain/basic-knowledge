@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>对象类型的确定</title>
+</head>
+
+<body>
+    <div>
+        对象类型的确定有两种方法：<br/> 第一种：typeof操作符；
+        <br/> 第二种：Object.prototype.toString。
+    </div>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            showType1();
+            showType2();
+        }
+
+        function showType1() {
+            console.log(typeof 1); //number
+            console.log(typeof ''); //string
+            console.log(typeof null); //object
+            console.log(typeof undefined); //undefined
+            console.log(typeof true); //boolean
+            console.log(typeof {}); //object
+            console.log(typeof []); //object
+            console.log(typeof
+                function() {}); //function
+        }
+        // 使用typeof确定对象类型是有缺陷的，在这种方法中，null和数组的类型都是object。
+        // 原因是JS中没有原生数组类型，数组是通过对象模拟的，所以数组也是对象。
+        // 但是如何区分数组和对象呢？下面使用Object.prototype.toString方法。
+
+        function showType2() {
+            console.log(Object.prototype.toString.call(1)); //[object Number]
+            console.log(Object.prototype.toString.call('')); //[object String]
+            console.log(Object.prototype.toString.call(null)); //[object Null]
+            console.log(Object.prototype.toString.call(undefined)); //[object Undefined]
+            console.log(Object.prototype.toString.call(true)); //[object Boolean]
+            console.log(Object.prototype.toString.call({})); //[object Object]
+            console.log(Object.prototype.toString.call([])); //[object Array]
+            console.log(Object.prototype.toString.call(function() {})); //[object Function]
+        }
+
+        // 如果要判断对象是否为数组，则应该使用如下方法：
+        function isArray(val) {
+            return Object.prototype.toString.call(val) === '[object Array]';
+        }
+        alert(isArray([1, 2, 3])); //true
+    </script>
+</body>
+
+</html>
