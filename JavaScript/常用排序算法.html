@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>常见算法</title>
+</head>
+
+<body>
+    <dt>数组去重</dt>
+    <dd>建一个空对象和空数组，循环遍历需要去重的数组，判断对象有没有此属性，没有的话就给对象添加此属性，并向空数组中push这个值。</dd>
+    <dt>冒泡排序</dt>
+    <dd>相邻两个对比，最后把最大的排到了最后，重复此过程。</dd>
+    <dt>选择排序</dt>
+    <dd>寻找最小的数，保存索引，然后与第一层循环其下标对应的值进行交换</dd>
+    <dt>快速排序</dt>
+    <dd>选取一个记录作为中间轴，然后将比‘这个记录值’小的移到‘记录值’之前，大的移到之后，然后递归。</dd>
+    <script type="text/javascript">
+        // 数组去重
+        function unique(arr) {
+            var obj = {};
+            var result = [];
+            for (var i in arr) {
+                if (!obj[arr[i]]) {
+                    obj[arr[i]] = true; //用于后面判断对象有没有此属性
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+        }
+        // alert(unique([1, 1, 2, 2, 3, 3]));//1,2,3
+
+        // 冒泡排序
+        function bubbleSort(arr) {
+            var len = arr.length;
+            for (var i = 0; i < len; i++) {
+                for (var j = 0; j < len - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) { //相邻元素两两对比
+                        var temp = arr[j + 1]; //元素交换
+                        arr[j + 1] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        // alert(bubbleSort([1, 5, 3, 9, 7])); //1,3,5,7,9
+
+        // 选择排序
+        function selectionSort(arr) {
+            var len = arr.length;
+            var minIndex, temp;
+            for (var i = 0; i < len - 1; i++) {
+                minIndex = i;
+                for (var j = i + 1; j < len; j++) {
+                    if (arr[j] < arr[minIndex]) { //寻找最小的数
+                        minIndex = j; //将最小数的索引保存
+                    }
+                }
+                temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+            }
+            return arr;
+        }
+        // alert(selectionSort([1, 7, 5, 3, 9])); //1,3,5,7,9
+
+        // 快速排序
+        function quickSort(arr) {
+            if (arr.length == 0) {
+                return []; // 返回空数组
+            }
+            var cIndex = Math.floor(arr.length / 2);
+            var c = arr.splice(cIndex, 1); //选取中间值
+            var l = []; //中间值左边的数组
+            var r = []; //中间值右边的数组
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] < c) {
+                    l.push(arr[i]);
+                } else {
+                    r.push(arr[i]);
+                }
+            }
+            return quickSort(l).concat(c, quickSort(r)); //递归  concat() 方法用于连接两个或多个数组。
+        }
+        alert(quickSort([1, 5, 3, 9, 7])); //1,3,5,7,9
+    </script>
+</body>
+
+</html>
