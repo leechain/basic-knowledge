@@ -9,12 +9,14 @@
 <body>
     <dt>数组去重</dt>
     <dd>建一个空对象和空数组，循环遍历需要去重的数组，判断对象有没有此属性，没有的话就给对象添加此属性，并向空数组中push这个值。</dd>
-    <dt>冒泡排序</dt>
+    <dt>冒泡排序,时间复杂度 O(n²)</dt>
     <dd>相邻两个对比，最后把最大的排到了最后，重复此过程。</dd>
-    <dt>选择排序</dt>
-    <dd>寻找最小的数，保存索引，然后与第一层循环其下标对应的值进行交换</dd>
-    <dt>快速排序</dt>
+    <dt>选择排序,时间复杂度 O(n²)</dt>
+    <dd>寻找最小的数，保存索引，然后与第每层循环其下标对应的值进行交换。</dd>
+    <dt>快速排序,不稳定,时间复杂度 O(nlogn)</dt>
     <dd>选取一个记录作为中间轴，然后将比‘这个记录值’小的移到‘记录值’之前，大的移到之后，然后递归。</dd>
+    <dt>插入排序，时间复杂度 O(n²)</dt>
+    <dd>插入排序就是每一步都将一个待排数据按其大小插入到已经排序的数据中的适当位置，直到全部插入完毕。</dd>
     <script type="text/javascript">
         // 数组去重
         function unique(arr) {
@@ -83,7 +85,27 @@
             }
             return quickSort(l).concat(c, quickSort(r)); //递归  concat() 方法用于连接两个或多个数组。
         }
-        alert(quickSort([1, 5, 3, 9, 7])); //1,3,5,7,9
+        // alert(quickSort([1, 5, 3, 9, 7])); //1,3,5,7,9
+
+        // 插入排序
+        function insertSort(array) {
+            var i = 0,
+                j = 0,
+                len = array.length,
+                flag = 0;
+            for (i = 1; i < len; i++) {
+                if (array[i] < array[i - 1]) {
+                    flag = array[i];
+                    array[i] = array[i - 1];
+                    for (j = i - 2; j >= 0 && flag < array[j]; j--) {
+                        array[j + 1] = array[j]
+                    }
+                    array[j + 1] = flag;
+                }
+            }
+            return array;
+        }
+        // alert(insertSort([1, 5, 3, 9, 7])); //1,3,5,7,9
     </script>
 </body>
 
