@@ -1,0 +1,89 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>一道综合JS综合考察题</title>
+</head>
+
+<body>
+    <a href="https://github.com/Wscats/Good-text-Share/issues/85">原文链接</a>
+    <script type="text/javascript">
+        首先定义了一个叫Foo的函数，
+        之后为Foo创建了一个叫getName的静态属性存储了一个匿名函数，
+        之后为Foo的原型对象新创建了一个叫getName的匿名函数。
+        之后又通过函数变量表达式创建了一个getName的函数，
+        最后再声明一个叫getName函数。
+        function Foo() {
+            getName = function() {
+                alert(1);
+            };
+            return this;
+        }
+        Foo.getName = function() {
+            alert(2);
+        };
+        Foo.prototype.getName = function() {
+            alert(3);
+        };
+        var getName = function() {
+            alert(4);
+        };
+
+        function getName() {
+            alert(5);
+        }
+
+        // 请写出以下输出结果：
+        Foo.getName(); //2  访问Foo函数上存储的静态属性
+        getName(); //4  此处其实有两个坑，一是变量声明提升，二是函数表达式和函数声明的区别。
+        Foo().getName(); //1  先执行了Foo函数，然后调用Foo函数的返回值对象的getName属性函数。 此处考察了两个知识点，一个是变量作用域问题，一个是this指向问题。
+        getName(); //1  直接调用getName函数，相当于window.getName()，因为这个变量已经被Foo函数执行时修改了，遂结果与第三问相同，为1，也就是说Foo执行后把全局的getName函数给重写了一次，所以结果就是Foo()执行重写的那个getName函数。
+        new Foo.getName(); //2  相当于是:new (Foo.getName)();   优先级是这样的：new (带参数列表)比new (无参数列表)高比函数调用高，跟成员访问同级。所以这里实际上将getName函数作为了构造函数来执行，遂弹出2。
+        new Foo().getName(); //3  相当于(new Foo()).getName();
+        new new Foo().getName(); //3  相当于new ((new Foo()).getName)();
+
+
+        // 后续我把这题的难度再稍微加大一点点(附上答案)，在Foo函数里面加多一个公有方法getName，
+        // 对于下面这题如果用在面试题上那通过率可能就更低了，因为难度又大了一点，又多了两个坑，
+        // 但是明白了这题的原理就等同于明白了上面所有的知识点了。
+        function Foo() {
+            this.getName = function() {
+                console.log(3);
+                return {
+                    getName: getName //这个就是第六问中涉及的构造函数的返回值问题
+                }
+            }; //这个就是第六问中涉及到的，JS构造函数公有方法和原型链方法的优先级
+            getName = function() {
+                console.log(1);
+            };
+            return this;
+        }
+        Foo.getName = function() {
+            console.log(2);
+        };
+        Foo.prototype.getName = function() {
+            console.log(6);
+        };
+        var getName = function() {
+            console.log(4);
+        };
+
+        function getName() {
+            console.log(5);
+        }
+        //答案：
+        Foo.getName(); //2
+        getName(); //4
+        console.log(Foo()); //Window {stop: function, open: function, alert: function, confirm: function, prompt: function…}
+        Foo().getName(); //1
+        getName(); //1
+        new Foo.getName(); //2  相当于是:new (Foo.getName)();
+        new Foo().getName(); //3  相当于(new Foo()).getName();
+        //多了一问
+        new Foo().getName().getName(); //3 1
+        new new Foo().getName(); //3  相当于new ((new Foo()).getName)();
+    </script>
+</body>
+
+</html>
