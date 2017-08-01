@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="description" content="五个典型的 JavaScript 面试题" charset="UTF-8">
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 问题1: 范围（Scope）
+        (function() {
+            var a = b = 5;
+        })();
+        console.log(b); //结果是5
+        // 这个问题的陷阱就是，在立即执行函数表达式（IIFE）中，有两个命名，但是其中变量是通过关键词var来声明的。这就意味着a是这个函数的局部变量。与此相反，b是在全局作用域下的。
+        // 这个问题另一个陷阱就是，在函数中他没有使用"严格模式" ('use strict';)。
+        // 如果 严格模式 开启，那么代码就会报出未捕获引用错误（Uncaught ReferenceError）：b没有定义。
+        // 记住，严格模式要求你在需要使用全局变量时，明确地引用该变量。
+        // 因此，你需要像下面这么写：
+        (function() {
+            'use strict';
+            var a = window.b = 5;
+        })();
+        console.log(b); //5
+
+
+        // 问题2: 创建 “原生（native）” 方法
+        // 在String对象上定义一个repeatify函数。这个函数接受一个整数参数，来明确字符串需要重复几次。这个函数要求字符串重复指定的次数。
+        // 举个例子：
+        String.prototype.repeatify = String.prototype.repeatify || function(times) {
+            var str = '';
+            for (var i = 0; i < times; i++) {
+                str += this;
+            }
+            return str;
+        }
+        console.log('hello'.repeatify(3)); //hellohellohello
+        // 这个问题测试了开发人员对于JavaScript中继承的掌握，以及prototype这个属性。这也验证了开发人员是否有能力扩展原生数据类型的功能（虽然不应该这么做）。
+        // 这个问题的另一个重点是验证你是否意识到并知道如何避免覆盖已经存在的函数。这可以通过在自定义函数之前判断该函数是否存在来做到。
+        // 当你需要为旧浏览器实现向后兼容的函数时，这一技巧十分有用。
+
+
+        // 问题3: 变量提升（Hoisting）
+        // 执行以下代码会有什么结果？为什么？
+        function test() {
+            console.log(a);
+            console.log(foo());
+
+            var a = 1;
+
+            function foo() {
+                return 2;
+            }
+        }
+        test(); //结果是undefined 2
+        // 这个结果的原因是，变量和函数都被提升了（hoisted）。
+        // 因此，在a被打印的时候，它已经在函数作用域中存在（即它已经被声明了），但是它的值依然是 undefined。
+        // 换言之，上述代码和以下代码是等价的。
+        function test() {
+            var a;
+
+            function foo() {
+                return 2;
+            }
+            console.log(a);
+            console.log(foo());
+
+            a = 1;
+        }
+        test(); //结果是undefined 2
+
+
+        // 问题4: this 在 JavaScript 中是如何工作的?
+        // 以下代码的结果是什么？请解释你的答案。
+        var fullname = 'John Doe';
+        var obj = {
+            fullname: 'Colin Ihrig',
+            prop: {
+                fullname: 'Aurelio De Rosa',
+                getFullname: function() {
+                    return this.fullname;
+                }
+            }
+        };
+        console.log(obj.prop.getFullname()); //Aurelio De Rosa
+        var test = obj.prop.getFullname;
+        console.log(test()); //John Doe
+        // 原因是在 JavaScript 中，一个函数的上下文环境，也就是this关键词所引用对象，是依赖于函数是如何被调用的，而不是依赖于函数如何被定义的。
+        // 在第一个 console.log() 调用中， getFullname() 是作为 obj.prop 的函数被调用的。因此，这里的上下文环境指向后者并且函数返回this对象的 fullname 属性。
+        // 相反，当 getFullname() 被赋为test变量的值时，那个语境指向全局对象(window)。这是因为，test 被隐式设置为全局对象的属性。
+        // 因此，函数调用返回 window 的 fullname 属性值，在此段代码中，这个值是通过第一行赋值语句设置的。
+
+
+        // 问题5: call() 和 apply()
+        // 修复上一个问题，让最后一个 console.log() 打印出 Aurelio De Rosa。
+        // 要解决这个问题，可以通过为函数 call() 或者 apply() 强制函数调用的上下文环境。
+        // 在以下代码中，我先用 call()，在这里，用 apply() 也可以获得相同的结果：
+        console.log(test.call(obj.prop)); //Aurelio De Rosa
+        console.log(test.apply(obj.prop)); //Aurelio De Rosa
+    </script>
+</body>
+
+</html>
