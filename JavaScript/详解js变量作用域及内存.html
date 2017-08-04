@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>详解js变量作用域及内存</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 简而言之，堆内存存放引用值，栈内存存放固定类型值。“引用”是一个指向对象实际位置的指针。
+        // var box = new Object(); //创建一个引用类型
+        // var box = "trigkit4"; //基本类型值是字符串
+        // box.age = 21; //基本类型值添加属性很怪异，因为只有对象才可以添加属性。
+        // alert(box.age); //undefined
+
+
+        // var man = new Object(); //man指向了栈内存的空间地址
+        // man.name = "Jack";
+        // var man2 = man; //man2获得了man的指向地址
+        // alert(man2.name);
+        // alert(man.name); //两个都弹出Jack
+
+
+        // var man = new Object(); //man指向了栈内存的空间地址
+        // man.name = "Jack";
+        // var man2 = man; //man2获得了man的指向地址
+        // man2.name = "ming"; //因为他们都指向同一个object，同一个name，不管修改谁，大家都修改了
+        // alert(man2.name);
+        // alert(man.name); //两个都弹出ming
+        // 由以上可以得出：在变量复制方面，基本类型和引用类型也有所不同，基本类型复制的是值本身，而引用类型复制的是地址。
+
+
+        // 传递参数
+        // function box(num) { //按值传递
+        //     num += 10;
+        //     return num;
+        // }
+        // var num = 10;
+        // var result = box(num);
+        // alert(result); //20
+        // alert(num); //10
+        // js没有按引用传递的，如果存在引用传递的话，那么函数内的变量将是全局变量，在外部也可以访问。但这明显是不可能的。
+
+
+        // 执行环境及作用域
+        // var name = "Jack"; //定义全局变量
+        // function setName() {
+        //     return "trigkit4";
+        // }
+        // alert(window.name); // Jack 全局变量，最外围，属于window属性
+        // alert(window.setName()); // trigkit4 全局函数，最外围，属于window方法
+
+
+        // var name = "Jack";
+        // function setName() {
+        //     name = "trigkit4"; //去掉var变成了全局变量
+        // }
+        // alert(window.setName()); //undefined
+        // alert(name); //弹出trigkit4
+
+
+        // 通过传参，也是局部变量
+        // var name = "Jack";
+        // function setName(name) { //通过传参，也是局部变量
+        //     alert(name);
+        // }
+        // setName("￼trigkit4"); //弹出trigkit4
+        // alert(name); //弹出Jack
+
+
+        // 函数体内还包含函数，只有这个函数才可以访问内一层的函数
+        // var name = "Jack";
+        // function setName() {
+        //     function setYear() { //setYear()方法的作用域在setName()内
+        //         return 21;
+        //     }
+        // }
+        // alert(setYear()); //无法访问，出错
+
+
+        // var name = "Jack";
+        // function setName() {
+        //     function setYear() { //setYear()方法的作用域在setName()内
+        //         return 21;
+        //     }
+        //     return setYear();
+        // }
+        // alert(setName()); //弹出21
+
+
+        // var name = "Jack";
+        // function setName() {
+        //     function setYear() { //setYear()方法的作用域在setName()内
+        //         var b = "hi"; //变量b的作用域在setYear()内
+        //         return 21;
+        //     }
+        //     alert(b); //无法访问 
+        // }
+        // setName();
+
+
+        // if (true) { //if语句的花括号没有作用域的功能,for循环语句也是如此。
+
+        //     var box = "trigkit4";
+        // }
+        // alert(box); //弹出 trigkit4
+
+
+        // 变量的查询
+        // 在变量的查询中，访问局部变量要比全局变量来得快，因此不需要向上搜索作用域链。
+        // var name = "Jack";
+        // function setName() {
+        //     var name = "trigkit4";
+        //     return name; //从底层向上搜索变量
+        // }
+        // alert(setName()); //trigkit4
+
+        // 如果去掉var name = "trigkit4"，那么将弹出“Jack”
+        // var name = "Jack";
+        // function setName() {
+        //     return name; //从底层向上搜索变量
+        // }
+        // alert(setName()); //Jack
+    </script>
+</body>
+
+</html>
