@@ -1,0 +1,125 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>9-8</title>
+    <style type="text/css">
+        /* 单文字垂直居中: */
+        
+        .align_cc {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+        /* 多行文字垂直居中： */
+        
+        .align_box {
+            width: 220px;
+            height: 200px;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            *position: relative;
+        }
+        
+        .align_box span.align_word {
+            display: inline-block;
+            *position: absolute;
+            *left: 0;
+            *top: 50%;
+            *width: 100%;
+        }
+        
+        .align_box span.align_word a {
+            *display: inline-block;
+            *position: relative;
+            *top: -50%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1. 请用div+css写出文字水平垂直距中，图片水平垂直距中的样式及布局。  -->
+    <div class="align_box">
+        <span class="align_word">
+                <a href="">文字垂直居中对齐文字垂直居中对齐文字垂直居中对齐</a>
+        </span>
+    </div>
+    <hr> A green circle:
+    <svg> <circle r="50" cx="50" cy="50" fill="green"/> </svg>
+    <hr>
+    <article>
+        <hgroup>
+            <h1>Apples</h1>
+            <h2>Tasty, delicious fruit!</h2>
+        </hgroup>
+        <p>The apple is the pomaceous fruit of the apple tree.</p>
+        <section>
+            <h1>Red Delicious</h1>
+            <p>These bright red apples are the most common found in many supermarkets.</p>
+        </section>
+        <section>
+            <h1>Granny Smith</h1>
+            <p>These juicy, green apples make a great filling for apple pies.</p>
+        </section>
+    </article>
+    <hr>
+    <h1>Graduation</h1>
+    <section>
+        <h1>Ceremony</h1>
+        <p>Opening Procession</p>
+        <p>Speech by Validactorian</p>
+        <p>Speech by Class President</p>
+        <p>Presentation of Diplomas</p>
+        <p>Closing Speech by Headmaster</p>
+    </section>
+    <section>
+        <h1>Graduates</h1>
+        <ul>
+            <li>Molly Carpenter</li>
+            <li>Anastasia Luccio</li>
+            <li>Ebenezar McCoy</li>
+            <li>Karrin Murphy</li>
+            <li>Thomas Raith</li>
+            <li>Susan Rodriguez</li>
+        </ul>
+    </section>
+    <hr>
+    <article>
+        <a target="blank" href="http://www.apple.com">Safari 5 released</a><br /> 7 Jun 2010. Just after the announcement of the new iPhone 4 at WWDC, Apple announced the release of Safari 5 for Windows and Mac......
+    </article>
+    <hr>
+    <header>
+        <h1>My Blog</h1>
+    </header>
+    <article>
+        <h1>My Blog Post</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <aside>
+            <!-- Since this aside is contained within an article, a parser
+
+      should understand that the content of this aside is directly related
+
+      to the article itself. -->
+            <h1>Glossary</h1>
+            <dl>
+                <dt>Lorem</dt>
+                <dd>ipsum dolor sit amet</dd>
+            </dl>
+        </aside>
+    </article>
+    <aside>
+        <!-- This aside is outside of the article. Its content is related
+
+    to the page, but not as closely related to the above article -->
+        <h2>Blogroll</h2>
+        <ul>
+            <li><a href="#">My Friend</a></li>
+            <li><a href="#">My Other Friend</a></li>
+            <li><a href="#">My Best Friend</a></li>
+        </ul>
+    </aside>
+</body>
+
+</html>

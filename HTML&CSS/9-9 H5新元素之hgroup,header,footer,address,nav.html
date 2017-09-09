@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <!-- <hgroup> 标签用于对网页或区段（section）的标题进行组合。 -->
+    <hgroup>
+        <h1>Welcome to my WWF</h1>
+        <h2>For a living planet</h2>
+    </hgroup>
+
+    <p>The rest of the content...</p>
+    <hr>
+
+    <!-- header
+header元素是一种具有引导和导航作用的辅助元素。通常，header元素可以包含一个区块的标题(如h1至h6，或者hgroup元素标签)，但也可以包含其他内容，例如数据表格、搜索表单或相关的logo图片。
+我们可以使用该元素来写整个页面的标题部分： -->
+    <header>
+        <h1>The most important heading on this page</h1>
+    </header>
+
+    <!-- 同一个页面中，每一个内容区块都可以有自己的<header>元素，例如： -->
+    <header>
+        <h1>The most important heading on this page</h1>
+    </header>
+
+    <article>
+        <header>
+            <h1>Title of this article</h1>
+        </header>
+        <p>...Lorem Ipsum dolor set amet...</p>
+    </article>
+    <!-- <header>元素通常包含一个标题标签(h1至h6)或是hgroup。另外，也可以包含其他内容，例如数据表格、搜索表单或相关的logo图片；
+            根据最新的W3C HTML5规范更新，<nav>元素标签也可以在<header>中使用。 -->
+    <hr>
+
+    <!-- footer元素可以作为其直接父级内容区块或是一个根区块的结尾。footer通常包括其相关区块的附加信息，如作者、相关阅读链接以及版权信息等。 
+        过去(及目前)，我们通常使用类似下面这样的代码来写页面的页脚： -->
+    <div id="footer">
+        <ul>
+            <li>copyright</li>
+            <li>sitemap</li>
+            <li>contact</li>
+            <li>to top</li>
+        </ul>
+    </div>
+    <!-- 在HTML5中，我们可以不使用div，而用更加语义化的footer来写： -->
+
+    <footer>
+        <ul>
+            <li>copyright</li>
+            <li>sitemap</li>
+            <li>contact</li>
+            <li>to top</li>
+        </ul>
+    </footer>
+
+    <!-- 在同一个页面中可以使用多个<footer>元素，即可以用作页面整体的页脚，也可以作为一个内容区块的结尾，例如，我们可以将<footer>直接写在<section>或是<article>中： -->
+    <section>
+        Section content appears here.
+        <footer>
+            Footer information for section.
+        </footer>
+    </section>
+
+    <article>
+        Article content appears here.
+        <footer>
+            Footer information for article.
+        </footer>
+    </article>
+    <hr>
+
+    <!-- address元素用来在文档中呈现联系信息，包括文档创建者的名字、站点链接、电子邮箱、真实地址、电话号码等；
+    address不只是用来呈现电子邮箱或真实地址这样的“地址”概念，而应该包括与文档创建人相关的各类联系方式信息。
+根据以上定义，我们可以使用下面的代码来展示一些志愿者的名字及主页链接： -->
+
+    The HTML5 Doctor is run by the following group of volunteers:
+    <address>
+  <a href="http://html5doctor.com/author/jacko">Jack Osborne</a>,
+  <a href="http://html5doctor.com/author/richc">Rich Clark</a>,
+  <a href="http://html5doctor.com/author/miker">Mike Robinson</a>,
+</address>
+
+    <!-- 下面是另一个范例，同时还使用到了<footer>及<time> 元素： -->
+    <footer>
+        <div class="vcard"> by
+            <address class="author">
+      <em class="fn"><a title="Posts by Jack Osborne" href="#">Jack Osborne</a></em>
+    </address> on
+            <time datetime="2009-11-04" class="published updated">November 4th, 2009</time>
+        </div>
+    </footer>
+
+    <!-- 如果我们确实需要在页面中显示某些与当前文档创建者联系方式无关的联系人信息，那么可以使用hCard微格式： -->
+    <div class="vcard">
+        <p class="fn"><a class="url" href="#">Dr. Jack Osborne</a></p>
+        <p class="adr">
+            <span class="street-address">HTML5 Hospital</span>
+            <span class="region">Doctorville</span>
+            <span class="postal-code">Postal Code</span>
+            <span class="country-name">Great Britain</span>
+        </p>
+        <p class="tel">+44 (0)XXXX XXXXXX</p>
+    </div>
+    <hr>
+
+    <!-- nav元素是一个可以用来作为页面导航的链接组；其中的导航元素链接到其他页面或当前页面的其他部分。
+        并不是所有的链接组都要被放进<nav>元素；例如，在页脚中通常会有一组链接，包括服务条款、首页、版权声明等；这时使用<footer>元素是最恰当的，而不需要<nav>元素。
+    一直以来，我们都习惯用如下这种方式来定义导航条： -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/blog/">Blog</a></li>
+        </ul>
+    </nav>
+
+    <!-- 下面是W3C给出的一个代码示例： -->
+    <h1>The Wiki Center Of Exampland</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Current Events</a></li>
+            ...more...
+        </ul>
+    </nav>
+    <article>
+        <header>
+            <h1> Demos in Exampland</h1>
+            <p>Written by A. N. Other.</p>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#public">Public demonstrations</a></li>
+                <li><a href="#destroy">Demolitions</a></li>
+                ...more...
+            </ul>
+        </nav>
+        <div>
+            <section id="public">
+                <h1>Public demonstrations</h1>
+                <p> ...more...</p>
+            </section>
+            <section id="destroy">
+                <h1>Demolitions</h1>
+                <p>...more...</p>
+            </section>
+            ...more...
+        </div>
+        <footer>
+            <p><a href="?edit">Edit</a> | <a href="?delete">Delete</a> | <a href="?Rename">Rename</a></p>
+        </footer>
+    </article>
+    <footer>
+        <p><small>© copyright 1998 Exampland Emperor</small></p>
+    </footer>
+
+</body>
+
+</html>

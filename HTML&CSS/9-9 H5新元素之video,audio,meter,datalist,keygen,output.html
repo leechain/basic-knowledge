@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <!-- 通过<video>标签，我们可以抛弃最近不怎么讨好的Flash，直接在页面中播放视频文件。视频文件自然是最符合语义化的文件格式，但该元素标签同样支持音频与图片。
+过去(及目前)，我们通常要使用类似下面这样繁冗丑陋的代码来将视频放置在页面中，但这种方式要求浏览器安装有Flash插件，并支持JavaScript： -->
+    <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="425" height="344" codebase="https://www.ted.com/talks/olutimehin_adegbeye_who_belongs_in_a_city">
+  <param name="allowFullScreen" value="true" />
+  <param name="allowscriptaccess" value="always" />
+  <param name="src" value="https://www.ted.com/talks/olutimehin_adegbeye_who_belongs_in_a_city" />
+  <param name="allowfullscreen" value="true" />
+  <embed type="application/x-shockwave-flash" width="425" height="344"
+  src="https://www.ted.com/talks/olutimehin_adegbeye_who_belongs_in_a_city" allowscriptaccess="always" allowfullscreen="true">
+  </embed>
+</object>
+
+    <!-- HTML5的方式： -->
+    <video width="640" height="360" src="https://www.ted.com/talks/olutimehin_adegbeye_who_belongs_in_a_city" controls autobuffer>
+  <p>
+    Try this page in Safari  4! Or you can
+    <a  href="https://www.ted.com/talks/olutimehin_adegbeye_who_belongs_in_a_city">download the  video</a>
+    instead.
+  </p>
+</video>
+
+    <video width="640" height="360" src="http://www.youtube.com/demo/google_main.mp4" autobuffer controls poster="whale.png">
+  <object classid="clsid:02bf25d5-8c17-4b23-bc80-d3488abddc6b" width="640"height="360"
+  codebase="http://www.apple.com/qtactivex/qtplugin.cab">
+    <param value="http://www.youtube.com/demo/google_main.mp4">
+    <param value="true">
+    <param value="false">
+    <embed src="http://www.youtube.com/demo/google_main.mp4" width="640"height="360"
+    autoplay="true" controller="false" pluginspage="http://www.apple.com/quicktime/download/">
+    </embed>
+  </object>
+</video>
+    <hr>
+    <audio controls autobuffer>
+  <source src="elvis.ogg" />
+  <source src="elvis.mp3" />
+  <!-- now include flash fall back -->
+</audio>
+    <p>Your score is: <meter>2 out of 10</meter></p>
+    <p>Your score is: <meter min="0" max="10">2 out of 10</meter></p>
+    <p>Your score is: <meter value="91" min="0" max="100" low="40" high="90" optimum="100">A+</meter></p>
+    <p>Christmas is in <meter value="30" min="1" max="366" title="days">30 days!</p>
+
+    <p><meter value="0.5">Moderate activity,</meter> Usenet, 618 subscribers</p>
+    <p><meter value="0.25">Low activity,</meter> Usenet, 22 subscribers</p>
+    <p><meter value="0.25">Low activity,</meter> Usenet, 66 subscribers</p>
+    <hr>
+
+    <!-- datalist 与 input 的新属性list一起使用可以创建组合框，双击input的时候可以提供选项让用户选择，类似历史记录一样。 -->
+    <input list="browsers" />
+    <datalist id="browsers">
+ <option value="Safari">Safari
+ <option value="Internet Explorer">Internet Explorer
+ <option value="Opera">Opera
+ <option value="Firefox">Firefox
+</datalist>
+    <hr>
+
+    <!-- <keygen> 标签规定用于表单的密钥对生成器字段。当提交表单时，私钥存储在本地，公钥发送到服务器。 -->
+    <form action="demo_keygen.asp" method="get">
+        Username: <input type="text" name="usr_name" /> Encryption: <keygen name="security" />
+        <input type="submit" />
+    </form>
+    <hr>
+
+    <!-- <output> 标签定义不同类型的输出，比如脚本的输出。例如： -->
+    <form action="" method="get">
+        <p>
+            10 + 5 = <output name="sum"></output>
+        </p>
+        <button type="submit">计算</button>
+    </form>
+
+    <script type="text/javascript">
+        (function() {
+            var f = document.forms[0];
+
+            if (typeof f['sum'] !== 'undefined') {
+                f.addEventListener('submit', function(e) {
+                    f['sum'].value = 15;
+                    e.preventDefault();
+                }, false);
+            } else {
+                alert('你的浏览器尚未准备好！');
+            }
+        })();
+    </script>
+
+</body>
+
+</html>
