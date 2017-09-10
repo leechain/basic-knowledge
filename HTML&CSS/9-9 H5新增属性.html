@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <!-- input 和 textarea 元素有了一个新元素 dirname，用于用户所设置的提交的方向性的控制(译注，即书写的方向性，ltr或rtl)。 -->
+    <form action="addcomment.cgi" method=post>
+        <p><label>Comment: <input type=text name="comment" dirname="comment.dir" required></label></p>
+        <p><button name="mode" type=submit value="add">Post Comment</button></p>
+    </form>
+    <hr>
+    <!-- 新增属性novalidate的意思是允许form表单不验证即可提交（不用管form里的元素是否有验证条件，例如required, min, max等）。
+    例子代码： -->
+    <form action="demo_form.asp" novalidate="novalidate">
+        E-mail: <input type="email" name="user_email" />
+        <input type="submit" />
+    </form>
+
+    <!-- 还有一种用法是，同一个form里有多个submit按钮，可以针对某个按钮设置formnovalidate属性来忽略验证，例如： 
+     该form只有在点击Submit essay按钮的时候才验证表单，另外2个按钮不验证。 -->
+    <form action="editor.cgi" method="post">
+        <p><label>Name: <input required name=fn></label></p>
+        <p><label>Essay: <textarea required name=essay></textarea></label></p>
+        <p><input type=submit name=submit value="Submit essay"></p>
+        <p><input type=submit formnovalidate name=save value="Save essay"></p>
+        <p><input type=submit formnovalidate name=cancel value="Cancel"></p>
+    </form>
+    <hr>
+
+    <!-- input和button元素新增加了几个新属性（formaction, formenctype, formmethod, formnovalidate和formtarget），
+    如果这些设置这些属性的话，那所对应的form属性值将被覆盖，即input或button所属的form元素的action, enctype, method, novalidate和target属性的值将被覆盖。
+    例子代码： -->
+    <form action="demo_form.asp" method="get">
+        First name: <input type="text" name="fname" /><br /> Last name: <input type="text" name="lname" /><br />
+        <input type="submit" value="Submit" />
+        <input type="submit" formmethod="post" formaction="demo_post.asp" value="Submit" />
+    </form>
+
+    <form action="demo_form.asp" method="get">
+        First name: <input type="text" name="fname" /><br /> Last name: <input type="text" name="lname" /><br />
+        <input type="submit" value="Submit" /><br />
+        <input type="submit" formaction="demo_admin.asp" value="Submit as admin" />
+    </form>
+
+    <form action="demo_form.asp" method="get">
+        First name: <input type="text" name="fname" /><br /> Last name: <input type="text" name="lname" /><br />
+        <input type="submit" value="Submit" />
+        <input type="submit" formtarget="_blank" value="Submit" />
+    </form>
+    <hr>
+
+    <!-- style 元素有了一个新的 scoped 属性，用来启用限定作用范围的样式表。在一个这样的 style 元素里的样式规则只应用到当前style元素的父元素根下的子树，即兄弟树。 -->
+    <!-- 这个article正常使用head里声明的style -->
+    <article>
+        <h1>Blah Title Blah</h1>
+        <p>Blah blah article blah blah.</p>
+    </article>
+
+    <article>
+        <!-- 这里声明的style只能让该article以及子元素使用 -->
+        <style scoped>
+            h1 {
+                color: hotpink;
+            }
+            
+            article {
+                border: solid 1px hotpink;
+            }
+        </style>
+        <h1>Blah Title Blah</h1>
+        <p>Blah blah article blah blah.</p>
+    </article>
+    <hr>
+
+    <!-- 任何元素使用contenteditable属性的话，代表该元素是一个可编辑的区域。用户可以改变元素的内容以及操作标记。例如： -->
+    <p contenteditable="true">这是一段可编辑的段落。请试着编辑该文本。</p>
+    <!-- 该属于有3种值可选：true, false和空字符，空字符代表true。 而对
+    <iframe id="editor"></iframe>框架页面可以通过JS程序代码来实现：editor.document.designMode="on" 。 -->
+    <hr>
+
+    <!-- contextmenu属性用来指向一个作者提供的上下文目录，例如： -->
+    <form name="npc" action="">
+        <label>Character name: <input type=text contextmenu=namemenu  required></label>
+        <menu type=context id=namemenu>
+            <command label="Pick random name" onclick="document.forms.npc.elements.char.value = getRandomName()">
+                <command label="Prefill other fields based on name" onclick="prefillFields(document.forms.npc.elements.char.value)">
+        </menu>
+    </form>
+    <hr>
+
+    <!-- draggable 和 dropzone 属性可以与新的拖放API一起使用，draggable为是否允许拖放，dropzone代表可以拖放到哪个区域。 -->
+    <p draggable="true" dropzone="div1">test</p>
+    <hr>
+
+    <!-- spellcheck 属性规定是否对元素内容进行拼写检查。例如： -->
+    <p contenteditable="true" spellcheck="true">这是可编辑的段落。请试着编辑文本。</p>
+</body>
+
+</html>
