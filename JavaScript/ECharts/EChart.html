@@ -1,0 +1,106 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>初识EChart</title>
+    <script type="text/javascript" src="echarts.js"></script>
+</head>
+
+<body>
+    <div id="chartmain1" style="width:600px; height: 400px;"></div>
+    <div id="chartmain2" style="width:600px; height: 400px;"></div>
+    <div id="chartmain3" style="width:600px; height: 400px;"></div>
+
+    <script type="text/javascript">
+        // 折线图
+        //指定图标的配置和数据
+        var option = {
+            title: {
+                text: 'ECharts 数据统计'
+            },
+            tooltip: {},
+            legend: {
+                data: ['用户来源']
+            },
+            xAxis: {
+                data: ["Android", "IOS", "PC", "Ohter"]
+            },
+            yAxis: {
+
+            },
+            series: [{
+                name: '访问量',
+                type: 'line',
+                data: [500, 200, 360, 100]
+            }]
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chartmain1'));
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+    </script>
+
+    <script type="text/javascript">
+        // 柱状图：只要修改一个参数就可以了。把series里的type 值修改为"bar"
+        //指定图标的配置和数据
+        var option = {
+            title: {
+                text: 'ECharts 数据统计'
+            },
+            tooltip: {},
+            legend: {
+                data: ['用户来源']
+            },
+            xAxis: {
+                data: ["Android", "IOS", "PC", "Ohter"]
+            },
+            yAxis: {
+
+            },
+            series: [{
+                name: '访问量',
+                type: 'bar',
+                data: [500, 200, 360, 100]
+            }]
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chartmain2'));
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+    </script>
+
+    <!-- 饼图和折线图、柱状图有一点区别。主要是在参数和数据绑定上。
+    饼图没有X轴和Y轴的坐标，数据绑定上也是采用value 和name对应的形式。 -->
+    <script type="text/javascript">
+        var option = {
+            title: {
+                text: 'ECharts 数据统计'
+            },
+            series: [{
+                name: '访问量',
+                type: 'pie',
+                radius: '60%',
+                data: [{
+                    value: 500,
+                    name: 'Android'
+                }, {
+                    value: 200,
+                    name: 'IOS'
+                }, {
+                    value: 360,
+                    name: 'PC'
+                }, {
+                    value: 100,
+                    name: 'Ohter'
+                }]
+            }]
+        };
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chartmain3'));
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>
