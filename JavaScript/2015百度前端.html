@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>2015百度前端</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var x = 1,
+            y = z = 0;
+
+        function add(n) {
+            return n = n + 1;
+        }
+        y = add(x);
+
+        function add(n) {
+            return n = n + 3;
+        }
+        z = add(x);
+        console.log(x); //1
+        console.log(y); //4
+        console.log(z); //4
+    </script>
+</body>
+
+</html>
