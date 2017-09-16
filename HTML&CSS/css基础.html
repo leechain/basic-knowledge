@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>css基础</title>
+    <style type="text/css">
+        /* #demo {
+            width: 0;
+            height: 0;
+            border-width: 20px;
+            border-style: solid;
+            border-color: transparent transparent red transparent;
+        } */
+        
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            /*此设置非常关键，因为默认的body，html高度为0，所以后面设置的div的高度无法用百分比显示*/
+        }
+        
+        #top {
+            height: 50%;
+            /*此步结合html,body高度为100%，解决元素相对窗口的定位问题*/
+            width: 50%;
+            background: #ccc;
+            margin: 0 auto;
+        }
+        
+        #left,
+        #right {
+            float: left;
+            /*采用float方式，对元素进行左右定位*/
+            width: 50%;
+            /*此步解决元素相对窗口的定位问题*/
+            height: 100%;
+            /*此步解决元素相对窗口的定位问题*/
+            background: yellow;
+        }
+        
+        #right {
+            background: green;
+        }
+        
+        #bottom {
+            width: 100%;
+            height: 50%;
+            background: #ddd;
+        }
+        
+        .main {
+            position: fixed;
+            /*此步解决元素相对窗口的定位问题*/
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .wrapper-up {
+            height: 50%;
+        }
+        
+        .wrapper-down {
+            height: 50%;
+            position: relative;
+        }
+        
+        .div-square-up {
+            width: 50%;
+            margin: 0 auto;
+            border: 2px solid red;
+            height: 96%;
+            box-sizing: border-box;
+        }
+        
+        .div-square-left {
+            position: absolute;
+            /*此步解决元素左右定位问题*/
+            left: 0;
+            width: 48%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px solid red;
+        }
+        
+        .div-square-right {
+            position: absolute;
+            /*此步解决元素左右定位问题*/
+            right: 0;
+            width: 48%;
+            height: 100%;
+            border: 2px solid red;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 用纯CSS创建一个三角形的原理是什么？思路：把上、左、右三条边隐藏掉（颜色设为 transparent） -->
+    <!-- <div id="demo">
+
+    </div> -->
+
+    <!-- 一个满屏“品”字布局如何设计? -->
+    <!-- <div id="top">
+
+    </div>
+    <div id="bottom">
+        <div id="left">
+
+        </div>
+        <div id="right">
+
+        </div>
+    </div>
+    <div class="main">
+        <div class="wrapper-up">
+            <div class="div-square-up"></div>
+        </div>
+        <div class="wrapper-down">
+            <div class="div-square-left"></div>
+            <div class="div-square-right"></div>
+        </div>
+    </div> -->
+    <p style="font-size:36px;-webkit-font-smoothing: antialiased;font-style:oblique;">你好</p>
+
+</body>
+
+</html>
