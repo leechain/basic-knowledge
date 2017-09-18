@@ -1,0 +1,147 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>阿里2016前端</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+        
+        .fn-clear:after {
+            content: " ";
+            clear: both;
+            display: block;
+            font-size: 0;
+            visibility: hidden;
+            height: 0;
+        }
+        
+        .fn-clear {
+            zoom: 1;
+        }
+        
+        .container {
+            padding: 10px;
+        }
+        
+        .header {
+            background: #eee;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            float: left;
+            background: #f60;
+        }
+        
+        .main {
+            margin-bottom: 10px;
+        }
+        
+        .side-bar {
+            width: 200px;
+            float: right;
+            background: #ccc;
+        }
+        
+        .content {
+            margin-right: 200px;
+            background: #f6f6f6;
+        }
+        
+        .footer {
+            background: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 实现如下页面布局。核心区域左侧自适应，右侧固定宽度 200px -->
+    <div class="container">
+        <div class="header fn-clear">
+            <div class="logo">logo</div>
+        </div>
+        <div class="main">
+            <div class="side-bar">menu</div>
+            <div class="content">左侧内容<br/><br/><br/><br/><br/><br/></div>
+        </div>
+        <div class="footer">
+            footer
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // 代码功能支持a.name = “name1”; b.name = “name2”;
+        // 法一：污染全局变量this
+        // function obj(name) {
+        //     if (name) {
+        //         this.name = name;
+        //     }
+        //     return this;
+        // }
+        // obj.prototype.name = "name2";
+        // var a = obj("name1");
+        // var b = new obj;
+
+        // 法二：
+        function obj(name) {
+            if (name) {
+                var obj = {};
+                obj.name = name;
+                return obj;
+            }
+        }
+        obj.prototype.name = "name2";
+        var a = obj("name1");
+        var b = new obj;
+        console.log(a.name);
+        console.log(b.name);
+
+        // 输出对象中值大于2的key的数组，期待输出：[“c”, ”d”]
+        var data = {
+            a: 1,
+            b: 2,
+            c: 3,
+            d: 4
+        };
+        Object.keys(data).filter(function(x) {
+            return data[x] > 2;
+        })
+
+        // 请实现一个fibonacci函数，要求其参数和返回值如下所示：
+        /**
+         *@desc: fibonacci
+         *@param: count {Number}
+         *@return: result {Number} 第count个fibonacci值，计数从0开始
+          fibonacci数列为：[1, 1, 2, 3, 5, 8, 13, 21, 34 …]
+          则getNthFibonacci(0)返回值为1
+          则getNthFibonacci(4)返回值为5
+         */
+        // 答案：
+        // 此题应该避免使用递归的方法，因为当count较大时，递归的方法耗时较长。
+        // 故考虑使用迭代法，可以使用数组记录每一项。
+        // 但此题只需要用到前面两项，从节约空间的角度讲不需要开辟数组。
+
+        function getNthFibonacci(count) {
+            if (count < 0) return 0;
+            if (count <= 1) return 1;
+            var first = 1;
+            var second = 1;
+            var third = 0;
+            for (var i = 2; i <= count; i++) {
+                third = first + second;
+                first = second;
+                second = third;
+            }
+            return third;
+        }
+        // alert(getNthFibonacci(8));
+    </script>
+</body>
+
+</html>
