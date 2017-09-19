@@ -1,0 +1,25 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        alert(a); //弹出函数体
+        a(); //10
+        var a = 3;
+
+        function a() {
+            alert(10);
+        }
+        alert(a); //3
+        a = 6;
+        alert(a); //6
+        a(); //报错，a is not a function
+    </script>
+</body>
+
+</html>
