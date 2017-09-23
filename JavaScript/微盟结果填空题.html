@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <script type="text/javascript">
+        var obj = {
+            say: function() {
+                var f1 = () => {
+                    console.log("this1=", this);
+                    alert(this);
+                    setTimeout(() => {
+                        console.log("this2=", this);
+                        alert(this);
+                    })
+                }
+                f1();
+            }
+        }
+        obj.say()
+    </script>
+
+</body>
+
+</html>
