@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>求职 一篇非常不错的前端面试文章</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // 1、Object prototype
+        // 定义一个函数spacify ,将一个字符串作为参数传入，然后返回一个字符串，不过该字符串相对原有传入参数的变化是字母与字母之间多了一个空格。
+        // spacify('hello world') // => 'h e l l o  w o r l d'
+        function spacify(str) {
+            return str.split("").join(" ");
+        }
+        // alert(spacify("hello world"));
+
+        // 如何将这个函数直接作用在一个字符串对象上. 'hello world'.spacify();
+        // 这个问题可以让我了解面试者对原型链的理解，这个问题可以让彼此展开一些有讨论，诸如直接在原型链上定义属性的危害等等.
+        // 实际期待结果:
+        String.prototype.spacify = function() {
+            return this.split('').join(' ');
+        };
+        // alert('hello world'.spacify());
+        // 一般到这里我会让面试者讲讲函数声明和函数表达式的区别。
+
+        // 2、Arguments
+        // 接下来，我会去了解面试者对于 arguments的理解，我们会要求面试者定义一个log函数。log('hello world');
+        function log(msg) {
+            console.log(msg);
+        }
+
+        // 接下来，我会继续问如果我传入多个参数依旧输出一个字符串 ，我会提示面试者传入的参数是不固定的，我会暗示作者console.log实际上也接受多个参数。
+        // log('hello', 'world');
+        // 不过我还是希望您的面试者现在已经想起apply;面试者可能会在apply和call上困惑，这个时候我会做点小提示，不过将console上下文传入也是非常重要的.
+        function log() {
+            console.log.apply(console, arguments);
+        }
+        // alert(log('hello', 'world'));
+
+        // 接着我会继续追问，如果我希望在那个输出的字符串前统一加上(app) 这样的字符串，类似于这样:
+        // '(app) hello world'
+        // 这个问题明显会复杂很多，面试者应该知道arguments是一个伪数组，我们需要先将它转换成正常的数组，我们可以使用Array.prototype.slice
+        function log() {
+            var args = Array.prototype.slice.call(arguments);
+            args.unshift('(app)');
+            console.log.apply(console, args);
+        }
+        // alert(log('hello', 'world'));
+
+        // 3、Context
+        // 接下来我想了解面试者对于上下文以及this的理解，我会给出下边的代码，让面试者去解释count的值。
+        var User = {
+            count: 1,
+            getCount: function() {
+                return this.count;
+            }
+        }
+        console.log(User.getCount()); //1
+        var func = User.getCount;
+        console.log(func()); //undefined
+
+        // 接下来我会继续追问面试者如何确保func的上下文始终都和User关联，这样可以使输出的答案是1。
+        // 正确答案是使用Function.prototype.bind
+        var func = User.getCount.bind(User);
+        console.log(func()); //1
+
+        // 这个时候我会让面试者去进行完善，如果老的浏览器并不支持该方法，我们应该怎样去兼容。部分基础较差的面试者会比较纠结，但是个人认为任何一位前端工程师都应该对apply和call有着较为深刻的理解。
+        Function prototype.bind = Function.prototype.bind || function(context) {
+            var self = this;
+            return function() {
+                return self.apply(context, arguments);
+            }
+        }
+    </script>
+</body>
+
+</html>
